@@ -211,6 +211,7 @@ jobs:
         env:
           args: ${{ steps.generate-args.outputs.args }}
           arch: ${{ steps.generate-args.outputs.ARCH }}
+          PATH: "/usr/bin:/bin:/usr/local/bin:${{ env.PATH }}"
         run: |
           echo "PATH Variable: $PATH"
           make ${{ env.args }} ${{ env.DEFCONFIG_NAME }}
@@ -218,6 +219,7 @@ jobs:
         working-directory: ${{ env.KERNEL_NAME }}
         env:
           args: ${{ steps.generate-args.outputs.args }}
+          PATH: "/usr/bin:/bin:/usr/local/bin:${{ env.PATH }}"
         run: |
           echo "PATH Variable: $PATH"
           make ${{ env.args }}
