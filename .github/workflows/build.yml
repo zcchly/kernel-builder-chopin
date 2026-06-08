@@ -157,7 +157,11 @@ jobs:
             key=$(echo "$externalCommand" | cut -d= -f1)
             value=$(echo "$externalCommand" | cut -d= -f2)
             if [[ "$value" == *"/"* ]]; then
-              value="${{ env.WORKSPACE }}/$value"
+              if [[ "$key" == "HOSTCC" || "$key" == "HOSTLD" ]]; then
+                value="$value"
+              else
+                value="${{ env.WORKSPACE }}/$value"
+              fi
             fi
             args="$args $key=$value"
           done < <(jq -r '.externalCommand | to_entries[] | "\(.key)=\(.value)"' <<< "$params")
